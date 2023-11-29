@@ -1,118 +1,67 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useMemo} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from 'react-native-safe-area-context';
+import {I18nextProvider} from 'react-i18next';
+import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
+import {queryClient, persistOptions} from './app/react-query';
+import {ThemeProvider} from '@shopify/restyle';
+import AppNavigationContainer from '@navigation';
+import i18next, {useI18nStatus} from './app/utils/i18n';
+import {CombinedDefaultTheme, CombinedDarkTheme} from './app/themes';
+import useColorScheme from './app/hooks/useColorScheme';
+import {Provider as ReduxProvider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor, useAppSelector} from './app/store';
+import 'dayjs/locale/ro';
+import 'dayjs/locale/ru';
+import Overlay from '@component/Overlay';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  const deviceColorScheme = useColorScheme();
+  const appColorScheme = useAppSelector(state => state.ui.colorScheme);
+  const isOverlayVisible = useAppSelector(state => state.loading);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+  const theme = useMemo(() => {
+    if (appColorScheme === 'system') {
+      return deviceColorScheme === 'dark'
+        ? CombinedDarkTheme
+        : CombinedDefaultTheme;
+    }
+    return appColorScheme === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
+  }, [deviceColorScheme, appColorScheme]);
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+  const isLoadingTranslations = useI18nStatus();
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  if (isLoadingTranslations) {
+    return <Overlay />;
+  }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={persistOptions}>
+      <I18nextProvider i18n={i18next}>
+        <ThemeProvider theme={theme}>
+          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+            {isOverlayVisible && <Overlay />}
+            <AppNavigationContainer theme={theme} />
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </I18nextProvider>
+    </PersistQueryClientProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+const AppWithRedux = () => {
+  return (
+    <ReduxProvider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </ReduxProvider>
+  );
+};
 
-export default App;
+export default AppWithRedux;
