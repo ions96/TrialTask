@@ -1,0 +1,59 @@
+{
+  "name": "TrialTask",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "adb-all": "adb devices | tail -n +2 | cut -sf 1 | xargs -I {} adb -s {}",
+    "android-reverse-ports": "adb reverse tcp:8097 tcp:8097 && adb reverse tcp:8081 tcp:8081",
+    "android-reverse-ports-all": "npm run adb-all reverse tcp:8097 tcp:8097 && npm run adb-all reverse tcp:8081 tcp:8081",
+    "android": "react-native run-android",
+    "android:apk": "npm run gradle assembleRelease && open android/app/build/outputs/apk/release/",
+    "android:bundle": "npm run gradle bundleRelease && open android/app/build/outputs/bundle/release/",
+    "android:load-apk": "adb install android/app/build/outputs/apk/release/app-release.apk",
+    "android:load-apk-all": "npm run adb-all install android/app/build/outputs/apk/release/app-release.apk",
+    "check-lockfile": "./scripts/check-lockfile.sh",
+    "clean:android": "npm run uninstall:android && rm -rf android/build && npm run gradle clean",
+    "clean:ios": "rm -rf ios/build && cd ios && pod deintegrate",
+    "clean:node": "rm -rf node_modules",
+    "gradle": "cd android && ./gradlew",
+    "ios": "react-native run-ios",
+    "format": "prettier --write 'app/**/*.{js,ts,jsx,tsx,mjs,cjs,json}'",
+    "format:check": "prettier 'app/**/*.{js,ts,jsx,tsx,mjs,cjs,json}' --check",
+    "start": "react-native start",
+    "start:clean": "react-native start --reset-cache",
+    "test": "jest",
+    "ts-coverage": "type-coverage",
+    "lint": "npm run format:check && npm run lint:ts && npm run lint:js",
+    "lint:ci": "npm run format:check && npm run lint:ts && npm run lint:js --quiet",
+    "lint:js": "eslint app/",
+    "lint:ts": "tsc --skipLibCheck --noEmit",
+    "lint-staged": "lint-staged",
+    "uninstall:android": "adb uninstall md.casahub; true",
+    "uninstall:ios": "echo 'Script not yet added.'",
+    "postinstall": "react-native setup-ios-permissions"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.72.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native/eslint-config": "^0.72.2",
+    "@react-native/metro-config": "^0.72.11",
+    "@tsconfig/react-native": "^3.0.0",
+    "@types/react": "^18.0.24",
+    "@types/react-test-renderer": "^18.0.0",
+    "babel-jest": "^29.2.1",
+    "eslint": "^8.19.0",
+    "jest": "^29.2.1",
+    "metro-react-native-babel-preset": "0.76.8",
+    "prettier": "^2.4.1",
+    "react-test-renderer": "18.2.0",
+    "typescript": "4.8.4"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

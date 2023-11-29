@@ -1,0 +1,32 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@icons/*": ["app/assets/icons/*"],
+      "@images/*": ["app/assets/images/*"],
+      "@component": ["app/components"],
+      "@component/*": ["app/components/*"],
+      "@config": ["app/config"],
+      "@config/*": ["app/config/*"],
+      "@store": ["app/store"],
+      "@store/*": ["app/store/*"],
+      "@hooks": ["app/hooks"],
+      "@hooks/*": ["app/hooks/*"],
+      "@screen/*": ["app/screens/*"],
+      "@navigation": ["app/navigation"],
+      "@navigation/*": ["app/navigation/*"],
+      "@react-query": ["app/react-query"],
+      "@react-query/*": ["app/react-query/*"],
+      "@mmkv": ["app/mmkv"],
+      "@mmkv/*": ["app/mmkv/*"],
+      "@theme": ["app/themes"],
+      "@theme/*": ["app/themes/*"],
+      "@utils/*": ["app/utils/*"],
+      "@api/*": ["app/api/*"],
+      "@api": ["app/api"],
+      "@/*": ["app/*"]
+    }
+  }
+}
