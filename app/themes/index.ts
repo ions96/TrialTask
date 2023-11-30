@@ -54,6 +54,8 @@ export const CombinedDefaultTheme = createTheme(
       header: colors.white,
       gray: colors.gray,
       red: colors.red,
+      error: colors.red,
+      textError: colors.red,
       background: colors.whiteOpac,
     },
   }),
@@ -69,6 +71,8 @@ export const CombinedDarkTheme = createTheme(
       gray: colors.gray,
       background: colors.whiteOpac,
       red: colors.red,
+      textError: colors.red,
+      error: colors.red,
     },
   }),
 );
