@@ -8,4 +8,13 @@ export const LocalTextsRo = {
   t_app_totalprice: 'Total: $',
   t_app_addToCart: 'Adaduga in cos',
   t_app_addedToCart: 'Adaugat',
+  t_app_login: 'Login',
+  t_app_email: 'Email',
+  t_app_pass: 'Password',
+  t_app_logout: 'LogOut',
+  t_app_username: 'Username',
+  t_app_confirm: 'Do you want to log out?',
+  t_app_cancel: 'Cancel',
+  t_app_yes: 'Yes',
+  t_app_enteremail: 'Enter email',
 };

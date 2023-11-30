@@ -42,7 +42,7 @@ export default function AppNavigationContainer(
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={!isAuthenticated ? 'Home' : 'Login'}>
+          initialRouteName={isAuthenticated ? 'Home' : 'Login'}>
           <RootNavigator.Group>
             <RootNavigator.Screen name="Login" component={LoginScreen} />
           </RootNavigator.Group>

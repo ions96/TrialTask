@@ -9,6 +9,11 @@ const mediumType = {
   letterSpacing: 0.15,
   fontWeight: undefined,
 };
+const regularType = {
+  fontFamily: typeface.regular,
+  letterSpacing: 0.15,
+  fontWeight: undefined,
+};
 const boldType = {
   fontFamily: typeface.bold,
   letterSpacing: 0.15,
@@ -50,8 +55,42 @@ export const fonts = {
     lineHeight: 16,
     fontSize: 14,
   },
+  butMedium: {
+    ...mediumType,
+    lineHeight: 16,
+    fontSize: 14,
+  },
   headerMedium: {
     ...headerType,
     fontSize: 18,
+  },
+  inputRegular: {
+    ...regularType,
+    lineHeight: 18,
+    fontSize: 14,
+  },
+  smallRegular: {
+    ...regularType,
+    fontSize: 12,
+  },
+  regular17: {
+    ...regularType,
+    fontSize: 17,
+  },
+  regular15: {
+    ...regularType,
+    fontSize: 15,
+  },
+  medium18: {
+    ...mediumType,
+    fontSize: 18,
+  },
+  medium32: {
+    ...mediumType,
+    fontSize: 32,
+  },
+  menuRegular: {
+    ...regularType,
+    fontSize: 14,
   },
 };
