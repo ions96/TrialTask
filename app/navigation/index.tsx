@@ -8,17 +8,14 @@ import {RootStackParamList, AppNavigationContainerProps} from './types';
 import BottomTabNavigator from './BottomTabNavigator';
 import {useTheme} from '@theme';
 import {StatusBar} from 'react-native';
-import StackHeader from '@component/navigation/StackHeader';
-// import LoginScreen from '@screen/LoginScreen';
+import LoginScreen from '@screen/LoginScreen';
 import {useAppSelector} from './../store';
-import {useTranslation} from 'react-i18next';
 const RootNavigator = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigationContainer(
   props: AppNavigationContainerProps,
 ) {
   const theme = useTheme();
-  const {t} = useTranslation();
   const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
   const routeNameRef = useRef<string | null>(null);
   const navigationRef =
@@ -39,36 +36,18 @@ export default function AppNavigationContainer(
         onStateChange={async () => {
           const currentRouteName =
             navigationRef.current?.getCurrentRoute()?.name;
-
           routeNameRef.current = currentRouteName || 'unknown';
         }}>
         <RootNavigator.Navigator
           screenOptions={{
-            headerTintColor: theme.colors.text,
-            headerStyle: {backgroundColor: theme.colors.header},
-            header: StackHeader,
+            headerShown: false,
           }}
-          initialRouteName={isAuthenticated ? 'Home' : 'Login'}>
-          {/* <RootNavigator.Group
-            screenOptions={{
-              headerBackTitleVisible: false,
-            }}>
-            <RootNavigator.Screen
-              name="Login"
-              options={{headerShown: false}}
-              component={LoginScreen}
-            />
-          </RootNavigator.Group> */}
-          <RootNavigator.Group
-            screenOptions={{
-              headerBackTitleVisible: false,
-              header: StackHeader,
-            }}>
-            <RootNavigator.Screen
-              name="Home"
-              options={{headerShown: false}}
-              component={BottomTabNavigator}
-            />
+          initialRouteName={!isAuthenticated ? 'Home' : 'Login'}>
+          <RootNavigator.Group>
+            <RootNavigator.Screen name="Login" component={LoginScreen} />
+          </RootNavigator.Group>
+          <RootNavigator.Group>
+            <RootNavigator.Screen name="Home" component={BottomTabNavigator} />
           </RootNavigator.Group>
         </RootNavigator.Navigator>
       </NavigationContainer>

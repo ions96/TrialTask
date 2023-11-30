@@ -1,21 +1,17 @@
 import React from 'react';
-import {NativeStackHeaderProps} from '@react-navigation/native-stack';
+import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import Box from '@component/Box';
-import BackButton from './BackButton';
 import HeaderTitle from './HeaderTitle';
+import HeaderBackground from './HeaderBackground';
 
-export default function Header({
-  navigation,
-  options,
-  route,
-}: NativeStackHeaderProps) {
-  const {title} = options;
+export default function Header({options, route}: BottomTabHeaderProps) {
+  const {title, headerTitle} = options;
 
   return (
-    <Box flex={1} flexDirection="row" alignItems="center">
-      <BackButton onPress={navigation.goBack} />
-      <HeaderTitle title={title ?? route.name} />
-      <Box mr="md" />
-    </Box>
+    <HeaderBackground>
+      <Box flex={1} alignItems="center" justifyContent={'center'}>
+        <HeaderTitle title={headerTitle?.toString() ?? title ?? route.name} />
+      </Box>
+    </HeaderBackground>
   );
 }
