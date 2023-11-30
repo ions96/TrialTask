@@ -1,8 +1,8 @@
 const typeface = {
-  regular: 'SF-Pro-Display-Regular',
-  medium: 'SF-Pro-Display-Medium',
-  bold: 'SF-Pro-Display-Bold',
-  light: 'SF-Pro-Display-Light',
+  regular: 'SFProDisplay-Regular',
+  medium: 'SFProDisplay-Medium',
+  bold: 'SFProDisplay-Bold',
+  light: 'SFProDisplay-Light',
 };
 const mediumType = {
   fontFamily: typeface.medium,
@@ -15,7 +15,7 @@ const boldType = {
   fontWeight: undefined,
 };
 const headerType = {
-  fontFamily: typeface.bold,
+  fontFamily: typeface.medium,
   letterSpacing: 0,
   fontWeight: undefined,
 };
@@ -40,7 +40,7 @@ export const fonts = {
     lineHeight: 16,
     fontSize: 14,
   },
-  headerBold: {
+  headerMedium: {
     ...headerType,
     fontSize: 18,
   },
