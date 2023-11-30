@@ -14,6 +14,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {configureStore} from '@reduxjs/toolkit';
 import {MMKVStorageAdapter} from './../mmkv';
 import ui from './ui';
+import cartReducer from './cartproducts';
 import auth, {logoutListenerMiddleware} from './auth';
 import loading from './loading';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -23,6 +24,7 @@ import {API_URL} from './../config';
 const reducers = {
   ui,
   auth,
+  cart: cartReducer,
   loading,
 };
 
@@ -31,7 +33,7 @@ const rootReducers = combineReducers(reducers);
 const rootPersistConfig: PersistConfig<ReturnType<typeof rootReducers>> = {
   key: 'root-' + API_URL,
   storage: MMKVStorageAdapter,
-  whitelist: ['auth', 'ui'],
+  whitelist: ['auth', 'ui', 'cart'],
   blacklist: ['loading'],
   timeout: undefined,
   stateReconciler: autoMergeLevel2,

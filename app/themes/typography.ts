@@ -35,6 +35,16 @@ export const fonts = {
     lineHeight: 28,
     fontSize: 18,
   },
+  mediumchat18: {
+    ...mediumType,
+    lineHeight: 18,
+    fontSize: 18,
+  },
+  mediumchat12: {
+    ...mediumType,
+    lineHeight: 12,
+    fontSize: 12,
+  },
   primaryButton: {
     ...mediumType,
     lineHeight: 16,
