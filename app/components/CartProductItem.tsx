@@ -1,6 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Text from '@component/Text';
+import QuantitySpinner from '@component/QuantitySpinner';
 import {CartItem} from '@api/types';
 import ProgressFastImage from '@component/ProgressFastImage';
 interface Props {
@@ -15,10 +16,7 @@ const CartProductItem = ({
   handleRemoveProductFromCart,
 }: Props) => {
   return (
-    <TouchableOpacity
-      onPress={handleRemoveProductFromCart}
-      style={styles.itemcontainer}
-      activeOpacity={0.7}>
+    <View style={styles.itemcontainer}>
       <ProgressFastImage
         source={{uri: item.imageUrl}}
         imageStyle={styles.radiusImage}
@@ -33,12 +31,12 @@ const CartProductItem = ({
           ${item.price}
         </Text>
       </View>
-      <View style={styles.inputSpiner}>
-        <Text variant="mediumchat14" color="gray" mt="sm">
-          ${item.price}
-        </Text>
-      </View>
-    </TouchableOpacity>
+      <QuantitySpinner
+        quantity={item.quantity}
+        handleAddToCart={handleAddToCart}
+        handleRemoveProductFromCart={handleRemoveProductFromCart}
+      />
+    </View>
   );
 };
 
@@ -70,9 +68,5 @@ const styles = StyleSheet.create({
   content: {
     marginLeft: 20,
     flex: 2,
-  },
-  inputSpiner: {
-    marginLeft: 20,
-    flex: 1,
   },
 });
