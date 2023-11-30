@@ -52,6 +52,8 @@ export const CombinedDefaultTheme = createTheme(
       white: colors.white,
       black: colors.black,
       header: colors.white,
+      gray: colors.gray,
+      red: colors.red,
     },
   }),
 );
@@ -63,6 +65,8 @@ export const CombinedDarkTheme = createTheme(
       white: colors.white,
       black: colors.black,
       header: colors.white,
+      gray: colors.gray,
+      red: colors.red,
     },
   }),
 );
