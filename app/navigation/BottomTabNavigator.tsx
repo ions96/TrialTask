@@ -13,6 +13,7 @@ import StackHeader from '@component/navigation/StackHeader';
 import ShopScreen from '@screen/ShopScreen';
 import ProfileScreen from '@screen/ProfileScreen';
 import CartScreen from '@screen/CartScreen';
+import useCart from '@hooks/useCartActions';
 
 const Tab = createBottomTabNavigator<BottomTabsParamList>();
 export default function App({}: NativeStackScreenProps<
@@ -22,7 +23,9 @@ export default function App({}: NativeStackScreenProps<
   const {t} = useTranslation();
   const theme = useTheme();
   const inserts = useSafeAreaInsets();
-
+  const {getCartItems, calculateCartTotal} = useCart();
+  const cartItemsLength = getCartItems().length;
+  const totalPrice = calculateCartTotal();
   return (
     <Tab.Navigator
       backBehavior="history"
@@ -85,8 +88,8 @@ export default function App({}: NativeStackScreenProps<
         name="Cart"
         options={{
           title: t('t_app_cart'),
-          headerTitle: t('t_app_totalprice'),
-          tabBarBadge: 3,
+          headerTitle: t('t_app_totalprice') + totalPrice,
+          tabBarBadge: cartItemsLength,
           tabBarIcon: props => <CartIcon {...props} />,
         }}
         component={CartScreen}
