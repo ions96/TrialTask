@@ -6,4 +6,6 @@ export const LocalTextsRo = {
   t_app_bestshop: 'Cel mai bun magazin',
   t_app_account: 'Cont',
   t_app_totalprice: 'Total: $',
+  t_app_addToCart: 'Adaduga in cos',
+  t_app_addedToCart: 'Adaugat',
 };

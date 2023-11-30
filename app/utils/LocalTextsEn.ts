@@ -6,4 +6,6 @@ export const LocalTextsEn = {
   t_app_bestshop: 'Best Shop',
   t_app_account: 'Account',
   t_app_totalprice: 'Total: $',
+  t_app_addToCart: 'Add to cart',
+  t_app_addedToCart: 'Added',
 };

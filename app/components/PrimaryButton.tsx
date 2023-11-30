@@ -8,7 +8,6 @@ import {
 import Text, {TextProps} from '@component/Text';
 import {borderRadii, colors, spacing} from '@theme';
 import Box from './Box';
-import PlusIcon from './../assets/icons/PlusIcon';
 
 interface Props extends TouchableOpacityProps {
   dark?: boolean;
@@ -26,7 +25,6 @@ export default function PrimaryButton({
   textColor = 'white',
   disabled,
   isLoading,
-  plusicon,
   ...props
 }: Props) {
   return (
@@ -35,7 +33,6 @@ export default function PrimaryButton({
       disabled={disabled || isLoading}
       style={[styles.container, style]}
       {...props}>
-      {plusicon ? <PlusIcon color={'#fff'} /> : null}
       <Text variant={textVariant} color={textColor}>
         {title}
       </Text>
@@ -51,10 +48,11 @@ export default function PrimaryButton({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: borderRadii.lg,
+    borderRadius: borderRadii.md,
     flexDirection: 'row',
-    width: '100%',
-    minHeight: 40,
+    paddingHorizontal: 20,
+    minWidth: 110,
+    paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.mainBlue,

@@ -17,7 +17,8 @@ type Props = CompositeBottomTabScreenProps<'Shop'>;
 const ITEMS_PER_PAGE = 3;
 export default function ProfileScreen({}: Props) {
   const inserts = useSafeAreaInsets();
-  const {addProductToCart} = useCart();
+  const {addProductToCart, getCartItems} = useCart();
+  const cartItems = getCartItems();
   const {t} = useTranslation();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const {
@@ -67,7 +68,6 @@ export default function ProfileScreen({}: Props) {
 
   const handleAddToCart = useCallback(
     (product: Product) => {
-      console.log(product);
       addProductToCart({
         id: product.id,
         title: product.title,
@@ -80,17 +80,19 @@ export default function ProfileScreen({}: Props) {
   );
   const renderItem = useCallback(
     ({item, index}: {item: Product; index: number}) => {
+      const isInCart = cartItems.some(cartItem => cartItem.id === item.id);
       return (
         <Box paddingHorizontal="md" mt="md">
           <ProductItem
             index={index}
+            isInCart={isInCart}
             item={item}
             handleAddToCart={() => handleAddToCart(item)}
           />
         </Box>
       );
     },
-    [handleAddToCart],
+    [handleAddToCart, cartItems],
   );
   const renderListFooterComponent = useCallback(() => {
     return (

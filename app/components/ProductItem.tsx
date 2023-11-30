@@ -1,19 +1,20 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Text from '@component/Text';
 import {Product} from '@api/types';
+import {useTranslation} from 'react-i18next';
 import ProgressFastImage from '@component/ProgressFastImage';
+import PrimaryButton from './PrimaryButton';
 interface Props {
   index: number;
   item: Product;
+  isInCart: boolean;
   handleAddToCart: () => void;
 }
-const ProductItem = ({item, handleAddToCart}: Props) => {
+const ProductItem = ({item, handleAddToCart, isInCart}: Props) => {
+  const {t} = useTranslation();
   return (
-    <TouchableOpacity
-      onPress={handleAddToCart}
-      style={styles.itemcontainer}
-      activeOpacity={0.7}>
+    <View style={styles.itemcontainer}>
       <ProgressFastImage
         source={{uri: item.images[0]}}
         imageStyle={styles.radiusImage}
@@ -27,11 +28,19 @@ const ProductItem = ({item, handleAddToCart}: Props) => {
         <Text variant="mediumchat12" color="gray" mt="sm">
           {item.description}
         </Text>
-        <Text variant="mediumchat14" color="black" mt="sm">
-          ${item.price}
-        </Text>
+        <View style={styles.addCart}>
+          <Text variant="mediumchat14" color="black" mt="sm">
+            ${item.price}
+          </Text>
+          <PrimaryButton
+            onPress={handleAddToCart}
+            style={isInCart ? styles.inactiveb : null}
+            title={isInCart ? t('t_app_addedToCart') : t('t_app_addToCart')}
+            disabled={isInCart}
+          />
+        </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -63,5 +72,14 @@ const styles = StyleSheet.create({
   content: {
     marginLeft: 20,
     flex: 1,
+  },
+  addCart: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    justifyContent: 'space-between',
+  },
+  inactiveb: {
+    opacity: 0.5,
   },
 });
